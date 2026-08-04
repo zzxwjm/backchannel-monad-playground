@@ -10,6 +10,12 @@ A simulation tells a user what may happen under a particular chain state. It is 
 
 Bonded Agent turns a narrow, measurable promise into a verifiable onchain commitment.
 
+## Current build
+
+- [Current interface preview](https://bonded-agent-web.vercel.app/)
+- The current interface is a demo flow. It honestly labels the market as `MockDex`; it does not yet prove that a live Testnet contract has locked collateral or completed a settlement.
+- The P0 target is three verifiable Monad Testnet paths: normal execution, automatic shortfall compensation, and safe failure with refund.
+
 ## Demo scope
 
 For the hackathon, we only support one objective scenario:
@@ -22,7 +28,7 @@ The operator publishes a one-time plan containing the user, input amount, expect
 
 - If actual output meets the guarantee, collateral is released.
 - If actual output is below the guarantee but inside the covered range, the contract pays the exact difference.
-- If the swap fails, the contract refunds the input and pays the predefined failure compensation.
+- If the result falls outside the covered range or the swap fails, the contract refunds the input and pays the predefined failure compensation.
 
 ## Why Monad and Moss
 
@@ -34,8 +40,9 @@ Monad Testnet is where we deploy and demonstrate real collateral locking, execut
 
 | Component | P0 status |
 | --- | --- |
-| Plan, collateral, execution, settlement, and event evidence | Real on Monad Testnet |
-| Normal execution and shortfall compensation cases | Real on Monad Testnet |
+| Interface flow and MockDex quote | Current demo |
+| Plan, collateral, execution, settlement, and event evidence | To be deployed on Monad Testnet |
+| Normal execution and shortfall compensation cases | To be verified on Monad Testnet |
 | Market pricing | Mock DEX with configurable rate, disclosed as simulation |
 | Moss workflow | Conditional P1 integration |
 | Multi-operator reputation, real DEX, and service fee | Future work |
@@ -50,12 +57,13 @@ Monad Testnet is where we deploy and demonstrate real collateral locking, execut
 | Dev 2 | Agent flow, frontend, wallet and contract integration |
 | Design | Promise card, transaction states, user-facing risk explanation |
 
-## Repository map
+## Project docs
 
 - [Five-day work plan](docs/five-day-workplan.md)
-- `contracts/` - Solidity contracts and tests
-- `app/` - frontend and wallet interaction
-- `docs/` - product decisions, threat model, demo evidence
+- [P0 product rules and contract acceptance](docs/product-spec.md)
+- [Interface states and copy](docs/interface-state-copy.md)
+- [Validation, evidence, and user-test protocol](docs/validation-and-user-test.md)
+- [Research / product operating board](docs/researcher-operating-board.md)
 
 ## Non-negotiable boundaries
 
@@ -63,7 +71,3 @@ Monad Testnet is where we deploy and demonstrate real collateral locking, execut
 - We do not use an LLM or admin to determine a shortfall.
 - We do not present a Mock DEX as a production market.
 - We do not claim that the Agent is correct in every possible task.
-
-## Getting started
-
-The codebase is being built during the hackathon. The first implementation milestone is a local proof that the contract can calculate and pay a shortfall without any offchain judgement.
